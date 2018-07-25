@@ -13,7 +13,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 25
+        "Patch": 26
     },
     "instanceNameFormat": "AutoTagger",
     "groups": [
@@ -69,7 +69,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\run-vsts.ps1"
+            "target": "$(currentDirectory)\\tagginggroup.ps1"
         }
     },
     "messages": {
