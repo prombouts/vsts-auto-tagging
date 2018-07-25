@@ -58,7 +58,7 @@ foreach ($r in $resources)
                 continue
             }
 
-            Write-Output "Adding tagName $tagName tagValue $tagValue to collection"
+            Write-Output "Adding tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
             # Add the tags for this resource
             $r.Tags.Add($tagName, $tagValue)
         }
@@ -71,7 +71,7 @@ foreach ($r in $resources)
         }
 
         # Reapply the updated set of tags
-        Write-Output "Writing $($r.Tags.Count) tags..."
+        Write-Output "Writing $($r.Tags.Count) tags to resource $($r.ResourceId)..."
         Set-AzureRmResource -ResourceId $r.ResourceId -Tag $r.Tags -Force
     }
     Catch
