@@ -81,7 +81,7 @@ foreach ($r in $resources)
 }
 
 # If not selected, end script
-if($tagResourceGroup == "no")
+if($tagResourceGroup -eq "no")
 {
     Exit 0
 }
