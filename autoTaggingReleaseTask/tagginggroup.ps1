@@ -135,7 +135,7 @@ Try
 
     # Reapply the updated set of tags
     Write-Output "Writing $($resourceGroup.Tags.Count) tags to resourcegroup $($resourceGroup.ResourceId)..."
-    Set-AzureRmResource -ResourceId $resourceGroup.ResourceId -Tag $resourceGroup.Tags -Force
+    Set-AzureRmResourceGroup -Id $resourceGroup.ResourceId -Tag $resourceGroup.Tags -Force
 }
 Catch
 {
