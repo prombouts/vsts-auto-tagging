@@ -123,7 +123,8 @@ Try
 
         Write-Output "Adding tagName $tagName tagValue $tagValue to $($resourceGroup.ResourceId) collection"
         # Add the tags for this resource
-        $Tags.Add($tagName, $tagValue)
+        $Tags += @{"$tagName"="$tagValue"}
+        Write-Output "Tags: $Tags"
     }
 
     # Sanity check number of tags
@@ -134,10 +135,10 @@ Try
     }
 
     # Reapply the updated set of tags
-    Write-Output "Writing $($Tags.Count) tags to resourcegroup $($resourceGroup.ResourceId)..."
-    Set-AzureRmResourceGroup -Id $resourceGroup.ResourceId -Tag $Tags -Force
+    Write-Output "Writing $($Tags.Count) tags to resourcegroup $($resourceGroupName)..."
+    Set-AzureRmResourceGroup -Name "$resourceGroupName" -Tag $Tags
 }
 Catch
 {
-    Write-Output "Error when updating resourcegroup $($resourceGroup.ResourceId)"
+    Write-Output "Error when updating resourcegroup $($resourceGroupName)"
 }
