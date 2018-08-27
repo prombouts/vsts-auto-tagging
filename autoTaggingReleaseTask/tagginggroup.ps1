@@ -91,7 +91,7 @@ if($tagResourceGroup -eq "no")
 Try
 {
     Write-Output "Found $($tagPairArray.length) tags to add to RG"
-
+    $Tags = $resourceGroup.Tags
     foreach($line in $tagPairArray)
     {
         if ([string]::IsNullOrWhiteSpace($line))
@@ -123,19 +123,19 @@ Try
 
         Write-Output "Adding tagName $tagName tagValue $tagValue to $($resourceGroup.ResourceId) collection"
         # Add the tags for this resource
-        $resourceGroup.Tags.Add($tagName, $tagValue)
+        $Tags.Add($tagName, $tagValue)
     }
 
     # Sanity check number of tags
-    if ($resourceGroup.Tags.Count -gt 15)
+    if ($Tags.Count -gt 15)
     {
         "Error: Combined tags resulted in more than 15 tags for resource $($resourceGroup.ResourceId)"
         continue
     }
 
     # Reapply the updated set of tags
-    Write-Output "Writing $($resourceGroup.Tags.Count) tags to resourcegroup $($resourceGroup.ResourceId)..."
-    Set-AzureRmResourceGroup -Id $resourceGroup.ResourceId -Tag $resourceGroup.Tags -Force
+    Write-Output "Writing $($Tags.Count) tags to resourcegroup $($resourceGroup.ResourceId)..."
+    Set-AzureRmResourceGroup -Id $resourceGroup.ResourceId -Tag $Tags -Force
 }
 Catch
 {
