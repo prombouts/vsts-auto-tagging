@@ -52,6 +52,18 @@
             "helpMarkDown": "Resource group to which tags will be added"
         },
         {
+            "name": "tagResourceGroup",
+            "type": "pickList",
+            "label": "Tag Resource Group",
+            "defaultValue": "no",
+                "options": {
+                    "no": "No, only tag resources within resource group",
+                    "yes": "Yes also tag resource group itself with tags"
+            },
+            "required": false,
+            "helpMarkDown": "Also add tags to Resource group itself"
+        },
+        {
             "name": "tagPairs",
             "type": "multiLine",
             "label": "Tag pairs (comma separated, line separated)",
