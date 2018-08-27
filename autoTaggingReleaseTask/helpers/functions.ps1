@@ -53,7 +53,7 @@ Function Set-TagsOnResource($r, $tagPairArray) {
         Set-AzureRmResource -ResourceId $r.ResourceId -Tag $r.Tags -Force
 }
 
-Function Set-TagsOnResource($resourceGroup, $tagPairArray) {
+Function Set-TagsOnResourceGroup($resourceGroup, $tagPairArray) {
     $Tags = $resourceGroup.Tags
     foreach($line in $tagPairArray)
     {

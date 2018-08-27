@@ -47,7 +47,7 @@ if($tagResourceGroup -eq "no")
 Try
 {
     Write-Output "Found $($tagPairArray.length) tags to add to RG"
-    Set-TagsOnResource($resourceGroup, $tagPairArray)
+    Set-TagsOnResourceGroup($resourceGroup, $tagPairArray)
 }
 Catch
 {
