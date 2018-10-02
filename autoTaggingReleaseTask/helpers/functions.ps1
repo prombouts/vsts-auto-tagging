@@ -38,7 +38,7 @@ Function Set-TagsOnResource($r, $tagPairArray) {
 
             Write-Output "Adding tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
             # Add the tags for this resource
-            $r.Tags.Add($tagName, $tagValue)
+            $r.Tags.Add($tagName, $tagValue)         
         }
 
         # Sanity check number of tags
@@ -86,7 +86,14 @@ Function Set-TagsOnResourceGroup($resourceGroup, $tagPairArray) {
 
         Write-Output "Adding tagName $tagName tagValue $tagValue to $($resourceGroup.ResourceId) collection"
         # Add the tags for this resource
-        $Tags += @{"$tagName"="$tagValue"}
+        if($Tags.ContainsKey("$tagName"))
+        {
+            $Tags["$tagName"] = "$tagValue"
+        }
+        else 
+        {
+            $Tags += @{"$tagName"="$tagValue"}
+        }        
         Write-Output "Tags: $Tags"
     }
 
