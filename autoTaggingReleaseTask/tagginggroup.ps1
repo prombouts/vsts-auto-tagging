@@ -7,8 +7,6 @@ Initialize-Azure
 $resourceGroupName = Get-VstsInput -Name resourceGroupName -Require
 $tagPairs = Get-VstsInput -Name tagPairs -Require
 $tagResourceGroup = Get-VstsInput -Name tagResourceGroup
-#$whenLastDeploymentIsFailed = Get-VstsInput -Name whenLastDeploymentIsFailed
-#$deploymentNameFilter = Get-VstsInput -Name deploymentNameFilter
 
 Write-Output "ResourceGroupName= $resourceGroupName"
 Write-Output "Tags= $tagPairs"
@@ -29,11 +27,12 @@ foreach ($r in $resources)
     {
         Write-Output "Found $($tagPairArray.length) tags to add"
         
-        Set-TagsOnResource($r, $tagPairArray) 
+        Set-TagsOnResource $r $tagPairArray
     }
     Catch
     {
-        Write-Output "Error when updating resource $($r.ResourceId)"
+        Write-Output "Set-TagsOnResource: Error when updating resource $($r.ResourceId)"
+        Write-Output "$_.Exception"
     }
 }
 
@@ -47,9 +46,10 @@ if($tagResourceGroup -eq "no")
 Try
 {
     Write-Output "Found $($tagPairArray.length) tags to add to RG"
-    Set-TagsOnResourceGroup($resourceGroup, $tagPairArray)
+    Set-TagsOnResourceGroup $resourceGroup $tagPairArray
 }
 Catch
 {
-    Write-Output "Error when updating resourcegroup $($resourceGroupName)"
+    Write-Output "Set-TagsOnResourceGroup: Error when updating resourcegroup $($resourceGroupName)"
+    Write-Output "$_.Exception"
 }

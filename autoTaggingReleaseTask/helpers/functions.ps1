@@ -7,6 +7,7 @@ Function Get-ArrayLengthValid ($arr) {
 }
 
 Function Set-TagsOnResource($r, $tagPairArray) {
+
     foreach($line in $tagPairArray)
         {
             if ([string]::IsNullOrWhiteSpace($line))
@@ -55,6 +56,7 @@ Function Set-TagsOnResource($r, $tagPairArray) {
 
 Function Set-TagsOnResourceGroup($resourceGroup, $tagPairArray) {
     $Tags = $resourceGroup.Tags
+    
     foreach($line in $tagPairArray)
     {
         if ([string]::IsNullOrWhiteSpace($line))
