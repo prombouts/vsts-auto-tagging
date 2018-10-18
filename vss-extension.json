@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "autotagging-extension",
     "publisher": "PeterRombouts",
-    "version": "1.0.38",
+    "version": "1.0.39",
     "name": "AutoTagging",
     "description": "A Visual Studio Services extension for automatically tagging all resources within a resource group",
     "public": true,

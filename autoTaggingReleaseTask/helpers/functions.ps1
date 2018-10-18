@@ -36,6 +36,14 @@ Function Set-TagsOnResource($r, $tagPairArray) {
             continue
         }
 
+
+        # Add the tags for this resource
+        if($r.Tags.Count -eq 0)
+        {
+            #Init hashtable
+            $r.Tags = New-Object 'System.Collections.Generic.Dictionary[String,String]'
+        }
+
         # Add the tags for this resource
         if($r.Tags.ContainsKey("$tagName"))
         {
@@ -46,7 +54,7 @@ Function Set-TagsOnResource($r, $tagPairArray) {
         {
             Write-Output "Adding tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
             $r.Tags.Add($tagName, $tagValue)
-        }    
+        }
     }
 
     # Sanity check number of tags

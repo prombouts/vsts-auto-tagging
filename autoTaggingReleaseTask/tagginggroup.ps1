@@ -4,9 +4,15 @@ Write-Output "Entering script tagginggroup.ps1"
 Import-Module $PSScriptRoot\ps_modules\VstsAzureHelpers_
 Initialize-Azure
 
-$resourceGroupName = Get-VstsInput -Name resourceGroupName -Require
-$tagPairs = Get-VstsInput -Name tagPairs -Require
-$tagResourceGroup = Get-VstsInput -Name tagResourceGroup
+#$resourceGroupName = Get-VstsInput -Name resourceGroupName -Require
+#$tagPairs = Get-VstsInput -Name tagPairs -Require
+#$tagResourceGroup = Get-VstsInput -Name tagResourceGroup
+
+$resourceGroupName = "rg-jordin-data"
+$tagPairs = "Hello,World
+TestPair,TestValue"
+#$tagResourceGroup = Get-VstsInput -Name tagResourceGroup
+
 
 Write-Output "ResourceGroupName= $resourceGroupName"
 Write-Output "Tags= $tagPairs"
