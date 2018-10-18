@@ -9,49 +9,56 @@ Function Get-ArrayLengthValid ($arr) {
 Function Set-TagsOnResource($r, $tagPairArray) {
 
     foreach($line in $tagPairArray)
+    {
+        if ([string]::IsNullOrWhiteSpace($line))
         {
-            if ([string]::IsNullOrWhiteSpace($line))
-            {
-                Write-Output "Skipping empty line"
-                continue
-            }
-            # Get existing tags and add a new tag
-            $arr = $line.Split("{,}")
-
-            $tagName = $arr[0]
-            $tagValue = $arr[1]
-
-            # Sanity check on empty string
-            if ([string]::IsNullOrWhiteSpace($tagName) -Or
-                [string]::IsNullOrWhiteSpace($tagValue))
-            {
-                Write-Output "Skipping pair: Empty tagName or tagValue"
-                continue
-            }
-
-            # Sanity check on key/value length / For storage accounts, the tag name is limited to 128 characters, and the tag value is limited to 256 characters.
-            if ($tagName.length -gt 128 -Or
-                $tagValue.length -gt 256)
-            {
-                Write-Output "Skipping pair: Length of tagName (128 chars) or tagValue (256 chars) too large"
-                continue
-            }
-
-            Write-Output "Adding tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
-            # Add the tags for this resource
-            $r.Tags.Add($tagName, $tagValue)         
+            Write-Output "Skipping empty line"
+            continue
         }
+        # Get existing tags and add a new tag
+        $arr = $line.Split("{,}")
+        $tagName = $arr[0]
+        $tagValue = $arr[1]
 
-        # Sanity check number of tags
-        if ($r.Tags.Count -gt 15)
+        # Sanity check on empty string
+        if ([string]::IsNullOrWhiteSpace($tagName) -Or
+            [string]::IsNullOrWhiteSpace($tagValue))
         {
-            "Error: Combined tags resulted in more than 15 tags for resource $($r.ResourceId)"
+            Write-Output "Skipping pair: Empty tagName or tagValue"
             continue
         }
 
-        # Reapply the updated set of tags
-        Write-Output "Writing $($r.Tags.Count) tags to resource $($r.ResourceId)..."
-        Set-AzureRmResource -ResourceId $r.ResourceId -Tag $r.Tags -Force
+        # Sanity check on key/value length / For storage accounts, the tag name is limited to 128 characters, and the tag value is limited to 256 characters.
+        if ($tagName.length -gt 128 -Or
+            $tagValue.length -gt 256)
+        {
+            Write-Output "Skipping pair: Length of tagName (128 chars) or tagValue (256 chars) too large"
+            continue
+        }
+
+        # Add the tags for this resource
+        if($r.Tags.ContainsKey("$tagName"))
+        {
+            Write-Output "Replacing tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
+            $r.Tags["$tagName"] = "$tagValue"
+        }
+        else 
+        {
+            Write-Output "Adding tagName $tagName tagValue $tagValue to $($r.ResourceId) collection"
+            $r.Tags.Add($tagName, $tagValue)
+        }    
+    }
+
+    # Sanity check number of tags
+    if ($r.Tags.Count -gt 15)
+    {
+        "Error: Combined tags resulted in more than 15 tags for resource $($r.ResourceId)"
+        continue
+    }
+
+    # Reapply the updated set of tags
+    Write-Output "Writing $($r.Tags.Count) tags to resource $($r.ResourceId)..."
+    Set-AzureRmResource -ResourceId $r.ResourceId -Tag $r.Tags -Force
 }
 
 Function Set-TagsOnResourceGroup($resourceGroup, $tagPairArray) {
@@ -88,13 +95,19 @@ Function Set-TagsOnResourceGroup($resourceGroup, $tagPairArray) {
 
         Write-Output "Adding tagName $tagName tagValue $tagValue to $($resourceGroup.ResourceId) collection"
         # Add the tags for this resource
+        if($Tags.Count -eq 0)
+        {
+            #Init hashtable
+            $Tags=@{}
+        }
+
         if($Tags.ContainsKey("$tagName"))
         {
             $Tags["$tagName"] = "$tagValue"
         }
         else 
         {
-            $Tags += @{"$tagName"="$tagValue"}
+            $Tags.Add($tagName, $tagValue)
         }        
         Write-Output "Tags: $Tags"
     }
