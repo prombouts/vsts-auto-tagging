@@ -5,6 +5,7 @@ This extension adds tags to all resources in any given resourcegroup.
 Usually this task is ran at the end of the deployment of all your resources.
 
 [![screenshot-1](screenshots/screenshots-vsts-auto-tagging-1.png "Screenshot-1")](screenshots/screenshots-vsts-auto-tagging-1.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fprombouts%2Fvsts-auto-tagging.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fprombouts%2Fvsts-auto-tagging?ref=badge_shield)
 
 ## Notes
 
@@ -15,3 +16,6 @@ For storage accounts, the tag name is limited to 128 characters, and the tag val
 ## Help & Contact
 
 See my blog for more info: https://www.peterrombouts.nl/index.php/2018/07/17/vsts-extension-tagging-all-resources-within-a-resource-group
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fprombouts%2Fvsts-auto-tagging.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fprombouts%2Fvsts-auto-tagging?ref=badge_large)
